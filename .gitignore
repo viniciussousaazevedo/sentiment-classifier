@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Generated datasets are reproducible and should not be committed.
+data/reviews.csv
+data/dataset_metadata.json
