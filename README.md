@@ -83,8 +83,6 @@ Accuracy is the proportion of all predictions that are correct.
 accuracy = correct predictions / total predictions
 ```
 
-It is easy to understand, but can be misleading when one class is much more common than the others.
-
 ### Precision
 
 Precision answers: *when the model predicts a class, how often is it correct?*
@@ -92,8 +90,6 @@ Precision answers: *when the model predicts a class, how often is it correct?*
 ```text
 precision = true positives / predicted positives
 ```
-
-For example, negative precision measures how often reviews predicted as `negative` are actually negative.
 
 ### Recall
 
@@ -103,8 +99,6 @@ Recall answers: *among all real examples of a class, how many did the model find
 recall = true positives / actual positives
 ```
 
-For example, negative recall measures how many truly negative reviews were detected.
-
 ### F1-score
 
 F1-score combines precision and recall using their harmonic mean.
@@ -113,14 +107,22 @@ F1-score combines precision and recall using their harmonic mean.
 F1 = 2 * (precision * recall) / (precision + recall)
 ```
 
-It is useful when both false alarms and missed examples matter. A score closer to `1.0` is better.
-
 ### Macro F1
 
 Macro F1 calculates the F1-score separately for `negative`, `neutral`, and `positive`, then takes their unweighted average.
 
 Each class has the same importance, even if the dataset is unbalanced. This is the main metric used for hyperparameter tuning in this project.
 
-## Generated Artifacts
+## Alternativa Approaches for this project
 
-Generated datasets, models, feature matrices, evaluation reports, and experiment outputs are stored locally in `data/` and `artifacts/`. They are reproducible and intentionally excluded from Git.
+| Approach | Text representation | Model | Strengths | Limitations |
+| --- | --- | --- | --- | --- |
+| Classic baseline | Word counts | Naive Bayes | Very simple and fast | Less accurate with context |
+| Current classic approach | TF-IDF | Logistic Regression | Fast, interpretable, and produces probabilities | Understands little context |
+| Strong classic approach | TF-IDF | Linear SVM | Often performs very well on text | Probabilities require an extra step |
+| Online / large-scale approach | TF-IDF | SGDClassifier | Trains in batches and scales well | More sensitive to hyperparameters |
+| Character-based approach | Character n-grams | Logistic Regression / SVM | Handles typos and spelling variations well | Can produce many features |
+| Embeddings approach | Semantic vectors | Logistic Regression / SVM / XGBoost | Captures more meaning and synonyms | Requires an additional embedding model |
+| Transformer approach | Contextualized tokens | BERT / DistilBERT / RoBERTa | Understands context and negation better | Heavier and more expensive |
+| LLM API approach | Natural-language prompt | Generative model | Requires little or no initial training | Cost, latency, and less predictable behavior |
+
