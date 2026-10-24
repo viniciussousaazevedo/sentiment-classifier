@@ -33,3 +33,12 @@ python -m src.text_preprocessing --input data/reviews.csv
 
 This command creates `data/processed/train.csv`,
 `data/processed/validation.csv`, and `data/processed/split_metadata.json`.
+
+Create TF-IDF features with:
+
+```bash
+python -m src.feature_extraction
+```
+
+This command learns the vocabulary from the training split only and writes the
+vectorizer, sparse feature matrices, and metadata to `artifacts/features/`.
