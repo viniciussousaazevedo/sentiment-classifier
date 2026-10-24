@@ -37,8 +37,17 @@ This command creates `data/processed/train.csv`,
 Create TF-IDF features with:
 
 ```bash
-python -m src.feature_extraction
+python -m src.tfidf_transformation
 ```
 
 This command learns the vocabulary from the training split only and writes the
 vectorizer, sparse feature matrices, and metadata to `artifacts/features/`.
+
+Train the complete sentiment pipeline with:
+
+```bash
+python -m src.model_training
+```
+
+This command fits text cleaning, TF-IDF, and Logistic Regression as one
+pipeline, then writes the trained model and metadata to `artifacts/models/`.

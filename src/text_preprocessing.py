@@ -40,6 +40,12 @@ def clean_text(text: str) -> str:
     return normalized.strip().casefold()
 
 
+def clean_text_batch(texts: object) -> list[str]:
+    """Clean an iterable of texts for use inside a scikit-learn pipeline."""
+
+    return [clean_text(text) for text in texts]
+
+
 def _validate_processed_frame(frame: pd.DataFrame) -> None:
     if frame["cleaned_text"].eq("").any():
         raise ValueError("Text cleaning produced one or more empty text values.")

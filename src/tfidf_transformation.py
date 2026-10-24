@@ -19,7 +19,7 @@ MAX_FEATURES = 20_000
 SUBLINEAR_TERM_FREQUENCY = True
 
 
-def create_vectorizer() -> TfidfVectorizer:
+def create_tfidf_vectorizer() -> TfidfVectorizer:
     """Create the project's standard TF-IDF vectorizer configuration."""
 
     return TfidfVectorizer(
@@ -54,7 +54,7 @@ def _distribution(frame: pd.DataFrame) -> dict[str, int]:
     return frame["sentiment"].value_counts().sort_index().astype(int).to_dict()
 
 
-def extract_features(
+def transform_tfidf_features(
     train_input_path: str | Path,
     validation_input_path: str | Path,
     output_directory: str | Path,
@@ -68,7 +68,7 @@ def extract_features(
     if overlap:
         raise ValueError("Training and validation sets contain overlapping cleaned text values.")
 
-    vectorizer = create_vectorizer()
+    vectorizer = create_tfidf_vectorizer()
     train_matrix = vectorizer.fit_transform(train_frame["cleaned_text"])
     validation_matrix = vectorizer.transform(validation_frame["cleaned_text"])
 
@@ -125,16 +125,16 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
-        metadata = extract_features(
+        metadata = transform_tfidf_features(
             train_input_path=args.train_input,
             validation_input_path=args.validation_input,
             output_directory=args.output_directory,
         )
     except (FileNotFoundError, ValueError) as error:
-        print(f"Feature extraction failed: {error}")
+        print(f"TF-IDF transformation failed: {error}")
         return 1
 
-    print("TF-IDF feature extraction completed.")
+    print("TF-IDF transformation completed.")
     print(f"Vocabulary size: {metadata['vocabulary_size']}")
     print(f"Training matrix shape: {tuple(metadata['train_matrix_shape'])}")
     print(f"Validation matrix shape: {tuple(metadata['validation_matrix_shape'])}")

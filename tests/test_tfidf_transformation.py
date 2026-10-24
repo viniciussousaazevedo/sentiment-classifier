@@ -4,7 +4,7 @@ import joblib
 import pandas as pd
 from scipy.sparse import load_npz
 
-from src.feature_extraction import extract_features
+from src.tfidf_transformation import transform_tfidf_features
 
 
 def write_processed_dataset(tmp_path, name, rows):
@@ -15,7 +15,7 @@ def write_processed_dataset(tmp_path, name, rows):
     return path
 
 
-def test_extract_features_fits_only_on_training_text(tmp_path):
+def test_tfidf_transformation_fits_only_on_training_text(tmp_path):
     train_path = write_processed_dataset(
         tmp_path,
         "train.csv",
@@ -39,7 +39,7 @@ def test_extract_features_fits_only_on_training_text(tmp_path):
     )
     output_directory = tmp_path / "features"
 
-    metadata = extract_features(train_path, validation_path, output_directory)
+    metadata = transform_tfidf_features(train_path, validation_path, output_directory)
 
     vectorizer = joblib.load(output_directory / "tfidf_vectorizer.joblib")
     train_matrix = load_npz(output_directory / "train_features.npz")
@@ -55,7 +55,7 @@ def test_extract_features_fits_only_on_training_text(tmp_path):
     ] == [1, 2]
 
 
-def test_extract_features_rejects_overlapping_text(tmp_path):
+def test_tfidf_transformation_rejects_overlapping_text(tmp_path):
     train_path = write_processed_dataset(
         tmp_path,
         "train.csv",
@@ -68,7 +68,7 @@ def test_extract_features_rejects_overlapping_text(tmp_path):
     )
 
     try:
-        extract_features(train_path, validation_path, tmp_path / "features")
+        transform_tfidf_features(train_path, validation_path, tmp_path / "features")
     except ValueError as error:
         assert "overlapping" in str(error)
     else:

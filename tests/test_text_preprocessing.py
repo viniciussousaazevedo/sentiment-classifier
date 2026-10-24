@@ -3,7 +3,7 @@ import json
 import pandas as pd
 import pytest
 
-from src.text_preprocessing import clean_text, preprocess_dataset
+from src.text_preprocessing import clean_text, clean_text_batch, preprocess_dataset
 
 
 def write_dataset(tmp_path, rows):
@@ -16,6 +16,13 @@ def test_clean_text_normalizes_without_removing_sentiment_signals():
     text = "  AMAZING\tservice! Visit HTTPS://example.com <b>NOW</b> &amp; enjoy.  "
 
     assert clean_text(text) == "amazing service! visit <url> now & enjoy."
+
+
+def test_clean_text_batch_supports_pipeline_input():
+    assert clean_text_batch(["EXCELLENT\tSERVICE", "Poor delivery"]) == [
+        "excellent service",
+        "poor delivery",
+    ]
 
 
 def test_preprocess_dataset_creates_reproducible_stratified_split(tmp_path):
