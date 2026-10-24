@@ -6,3 +6,4 @@ __pycache__/
 # Generated datasets are reproducible and should not be committed.
 data/reviews.csv
 data/dataset_metadata.json
+data/processed/

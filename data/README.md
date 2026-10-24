@@ -24,3 +24,12 @@ Validate it with:
 ```bash
 python -m src.data_validation --input data/reviews.csv
 ```
+
+Create cleaned, stratified training and validation files with:
+
+```bash
+python -m src.text_preprocessing --input data/reviews.csv
+```
+
+This command creates `data/processed/train.csv`,
+`data/processed/validation.csv`, and `data/processed/split_metadata.json`.
