@@ -51,3 +51,20 @@ python -m src.model_training
 
 This command fits text cleaning, TF-IDF, and Logistic Regression as one
 pipeline, then writes the trained model and metadata to `artifacts/models/`.
+
+Evaluate the trained pipeline with:
+
+```bash
+python -m src.model_evaluation
+```
+
+This command evaluates the model on the reserved validation split and writes
+metrics, a classification report, and a confusion matrix to
+`artifacts/evaluation/`.
+
+Run a training-size experiment using a balanced source dataset with at least
+20,000 examples per label:
+
+```bash
+python -m src.training_size_experiment --input data/experiments/reviews_20000_per_class.csv
+```
